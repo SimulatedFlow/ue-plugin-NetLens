@@ -1,0 +1,27 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0.0",
+	"EngineVersion": "5.8.0",
+	"FriendlyName": "NetLens - Replication Diagnostics In The Running Game",
+	"Description": "Epic's network tools are other programs. The Network Profiler records a session and you open it afterwards; Networking Insights reads a trace in a second window. Both are excellent, and neither is any use in the second that matters - the second the hitch happens, with your hands on the controller. NetLens is that second. It is a magnifying glass on replication that draws inside the running game: a Canvas panel with the driver's real outgoing and incoming rate at the top, and under it the actors that are costing you the most, sorted by bytes per second, each one openable into the individual properties that are moving. Every number comes from something measured. Update counts are read straight off the engine's own actor channels, so an actor that replicated eleven times in the last second is reported as eleven, not as its NetUpdateFrequency. Which properties moved is decided by comparing a shadow copy of the actor's replicated state against the live one, the same way the replication system decides - so a property that never changes never appears, however often the actor is considered. What each change costs is priced from the property's type with the engine's own serialisation rules, and the panel prints the attributed total next to the driver's real total so you can see for yourself how much of the traffic NetLens has accounted for. RPCs are captured automatically in Development and Test builds through the engine's own send hook, with their parameters priced the same way and reliable calls marked, and there is a NoteRPC call for Shipping. A ring buffer over the last ten seconds keeps the numbers steady enough to read and still keeps a one-frame spike visible as a peak. The tool has a hard ceiling on itself: at most 200 actors tracked, at most 64 replicated properties and 8 replicated components per actor, per-property breakdown for the top rows only, and everything past the ceiling folded into a single overflow row instead of growing without limit - because a diagnostic that becomes the problem it was bought to find is worse than no diagnostic. Freeze the measurement with a key, write it to CSV with another; the CSV is one row per entry with a Kind column, so actors, properties and RPCs come back into a spreadsheet from a single parse. Console commands NetLens.Show, NetLens.Freeze, NetLens.Export, NetLens.TopN and NetLens.Reset. The ranking, the ring buffer, the CSV and the cost model are static functions with no world behind them, so they are unit-tested and you can call them from anywhere. What this is not: NetLens does not replicate anything and it does not optimise anything. It measures and it shows. What to change is your call. No UMG in the product - the panel is drawn on UCanvas from AHUD so it survives a packaged build with no widget tree - no editor module, no third-party code. Built and verified on Win64.",
+	"Category": "Network",
+	"CreatedBy": "Silvan Teufel",
+	"CreatedByURL": "https://silvan.teufel-engineering.com",
+	"DocsURL": "https://wiki.teufel-engineering.com/en/NetLens/documentation",
+	"SupportURL": "mailto:teufelsilvan@gmail.com",
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "NetLens",
+			"Type": "Runtime",
+			"LoadingPhase": "PreDefault",
+			"PlatformAllowList": [
+				"Win64"
+			]
+		}
+	]
+}
